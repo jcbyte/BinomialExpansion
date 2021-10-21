@@ -79,13 +79,18 @@ int main(int argc, char** argv)
 
 		int finalNum = ncr(nNum, i) * pow(aNum, aPow) * pow(bNum, bPow);
 		
+		if (i != 0 && finalNum >= 0)
+			result += '+';
+
 		std::string finalVars;
 		for (int j = 0; j < aVarLength; j++)
-			finalVars += std::string(1, aVars[j]) + "^" + std::to_string(aPow);
+			if (aPow != 0)
+				finalVars += std::string(1, aVars[j]) + "^" + std::to_string(aPow);
 		for (int j = 0; j < bVarLength; j++)
-			finalVars += std::string(1, bVars[j]) + "^" + std::to_string(bPow);
+			if (bPow != 0)
+				finalVars += std::string(1, bVars[j]) + "^" + std::to_string(bPow);
 
-		result += std::to_string(finalNum) + finalVars + " + ";
+		result += std::to_string(finalNum) + finalVars;
 	}
 
 	std::cout << std::endl << result << std::endl;
