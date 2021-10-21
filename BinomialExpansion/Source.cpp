@@ -1,7 +1,8 @@
 #include <iostream>
 #include <string>
+#include <math.h>
 
-void SplitNumVar(std::string s, int* num, char** var)
+void SplitNumVar(std::string s, int* num, char** var, int* varlength = nullptr)
 {
 	std::string numChars = "+-0123456789";
 
@@ -28,11 +29,25 @@ void SplitNumVar(std::string s, int* num, char** var)
 		}
 	}
 
-	*num = std::stoi(numString);
+	if (!numString.empty())
+		*num = std::stoi(numString);
+	else
+		*num = 0;
 
-	*var = new char[varString.length()];
+	*varlength = varString.length();
+	*var = new char[*varlength];
 	for (int i = 0; i < varString.length(); i++)
 		(*var)[i] = varString[i];
+}
+
+int factorial(int n)
+{
+	return tgamma(n + 1);
+}
+
+int ncr(int n, int r)
+{
+	return factorial(n) / (factorial(r) * factorial(n - r));
 }
 
 int main(int argc, char** argv)
@@ -47,14 +62,33 @@ int main(int argc, char** argv)
 	std::cout << "n = "; std::cin >> n;
 
 	int aNum;
-	char* aVar = nullptr;
-	SplitNumVar(a, &aNum, &aVar);
+	char* aVars = nullptr;
+	int aVarLength;
+	SplitNumVar(a, &aNum, &aVars, &aVarLength);
 	int bNum;
-	char* bVar = nullptr;
-	SplitNumVar(b, &bNum, &bVar);
+	char* bVars = nullptr;
+	int bVarLength;
+	SplitNumVar(b, &bNum, &bVars, &bVarLength);
 	int nNum = std::stoi(n);
 
+	std::string result = "";
+	for (int i = 0; i <= nNum; i++)
+	{
+		int aPow = nNum - i;
+		int bPow = i;
 
+		int finalNum = ncr(nNum, i) * pow(aNum, aPow) * pow(bNum, bPow);
+		
+		std::string finalVars;
+		for (int j = 0; j < aVarLength; j++)
+			finalVars += std::string(1, aVars[j]) + "^" + std::to_string(aPow);
+		for (int j = 0; j < bVarLength; j++)
+			finalVars += std::string(1, bVars[j]) + "^" + std::to_string(bPow);
+
+		result += std::to_string(finalNum) + finalVars + " + ";
+	}
+
+	std::cout << std::endl << result << std::endl;
 
 	system("pause > nul");
 	return 0;
