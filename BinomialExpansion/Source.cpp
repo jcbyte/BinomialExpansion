@@ -30,14 +30,20 @@ void SplitNumVar(std::string s, int* num, char** var, int* varlength = nullptr)
 	}
 
 	if (!numString.empty())
+	{
 		*num = std::stoi(numString);
+	}
 	else
+	{
 		*num = 0;
+	}
 
 	*varlength = varString.length();
 	*var = new char[*varlength];
 	for (int i = 0; i < varString.length(); i++)
+	{
 		(*var)[i] = varString[i];
+	}
 }
 
 int factorial(int n)
@@ -79,18 +85,47 @@ int main(int argc, char** argv)
 
 		int finalNum = ncr(nNum, i) * pow(aNum, aPow) * pow(bNum, bPow);
 		
-		if (i != 0 && finalNum >= 0)
-			result += '+';
+		if (i != 0)
+		{
+			if (finalNum >= 0)
+			{
+				result += "+ ";
+			}
+			else
+			{
+				result += "- ";
+				finalNum *= -1;
+			}
+		}
+		result += std::to_string(finalNum) + " ";
 
 		std::string finalVars;
 		for (int j = 0; j < aVarLength; j++)
+		{
 			if (aPow != 0)
-				finalVars += std::string(1, aVars[j]) + "^" + std::to_string(aPow);
+			{
+				finalVars += std::string(1, aVars[j]);
+				if (aPow >= 2)
+				{
+					finalVars += "^" + std::to_string(aPow);
+				}
+				finalVars += " ";
+			}
+		}
 		for (int j = 0; j < bVarLength; j++)
+		{
 			if (bPow != 0)
-				finalVars += std::string(1, bVars[j]) + "^" + std::to_string(bPow);
+			{
+				finalVars += std::string(1, bVars[j]);
+				if (bPow >= 2)
+				{
+					finalVars += "^" + std::to_string(bPow);
+				}
+				finalVars += " ";
+			}
+		}
 
-		result += std::to_string(finalNum) + finalVars;
+		result += finalVars;
 	}
 
 	std::cout << std::endl << result << std::endl;
