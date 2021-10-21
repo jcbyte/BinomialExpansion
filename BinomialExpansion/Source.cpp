@@ -142,6 +142,6 @@ int main(int argc, char** argv)
 
 	std::cout << std::endl << result << std::endl;
 
-	system("pause > nul");
+	//system("pause > nul");
 	return 0;
 }
