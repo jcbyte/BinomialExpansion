@@ -58,23 +58,35 @@ int ncr(int n, int r)
 
 int main(int argc, char** argv)
 {
-	std::cout << "(a+b)^n where n is an integer" << std::endl << std::endl;
-
 	std::string a;
-	std::cout << "a = "; std::cin >> a;
 	std::string b;
-	std::cout << "b = "; std::cin >> b;
 	std::string n;
-	std::cout << "n = "; std::cin >> n;
+
+	if (argc == 4)
+	{
+		a = argv[1];
+		b = argv[2];
+		n = argv[3];
+	}
+	else
+	{
+		std::cout << "(a+b)^n where n is an integer" << std::endl << std::endl;
+
+		std::cout << "a = "; std::cin >> a;
+		std::cout << "b = "; std::cin >> b;
+		std::cout << "n = "; std::cin >> n;
+	}
 
 	int aNum;
 	char* aVars = nullptr;
 	int aVarLength;
 	SplitNumVar(a, &aNum, &aVars, &aVarLength);
+
 	int bNum;
 	char* bVars = nullptr;
 	int bVarLength;
 	SplitNumVar(b, &bNum, &bVars, &bVarLength);
+	
 	int nNum = std::stoi(n);
 
 	std::string result = "";
